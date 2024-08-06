@@ -72,6 +72,7 @@ class Tree
   end
 
   def balanced?
+    balanced_recursive?(@root)
   end
 
   def rebalance
@@ -160,5 +161,16 @@ class Tree
 
   def contains?(node)
     !find(node.data).nil?
+  end
+
+  def balanced_recursive?(node)
+    return true if node.nil?
+
+    left_height = height_recursive(node.left)
+    right_height = height_recursive(node.right)
+
+    return false if (left_height - right_height).abs > 1
+
+    balanced_recursive?(node.left) && balanced_recursive?(node.right)
   end
 end
