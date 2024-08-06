@@ -47,6 +47,30 @@ class Tree
     block_given? ? nil : result
   end
 
+  def inorder(&block)
+    inorder_traversal(@root, [], &block)
+  end
+
+  def preorder(&block)
+    preorder_traversal(@root, [], &block)
+  end
+
+  def postorder(&block)
+    postorder_traversal(@root, [], &block)
+  end
+
+  def height(node)
+  end
+
+  def depth(node)
+  end
+
+  def balanced?
+  end
+
+  def rebalance
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -77,5 +101,35 @@ class Tree
     else
       find_recursive(node.right, value)
     end
+  end
+
+  def inorder_traversal(node, result, &block)
+    return result if node.nil?
+
+    inorder_traversal(node.left, result, &block)
+    block_given? ? yield(node) : result << node.data
+    inorder_traversal(node.right, result, &block)
+
+    result
+  end
+
+  def preorder_traversal(node, result, &block)
+    return result if node.nil?
+
+    block_given? ? yield(node) : result << node.data
+    preorder_traversal(node.left, result, &block)
+    preorder_traversal(node.right, result, &block)
+
+    result
+  end
+
+  def postorder_traversal(node, result, &block)
+    return result if node.nil?
+
+    postorder_traversal(node.left, result, &block)
+    postorder_traversal(node.right, result, &block)
+    block_given? ? yield(node) : result << node.data
+
+    result
   end
 end
