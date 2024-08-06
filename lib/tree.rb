@@ -30,6 +30,23 @@ class Tree
     find_recursive(@root, value)
   end
 
+  def level_order
+    return [] if @root.nil?
+
+    result = []
+    queue = [@root]
+
+    until queue.empty?
+      node = queue.shift
+      block_given? ? yield(node) : result << node.data
+
+      queue << node.left if node.left
+      queue << node.right if node.right
+    end
+
+    block_given? ? nil : result
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
