@@ -60,6 +60,10 @@ class Tree
   end
 
   def height(node)
+    return nil if node.nil?
+    return -1 unless contains?(node)
+
+    height_recursive(node)
   end
 
   def depth(node)
@@ -131,5 +135,18 @@ class Tree
     block_given? ? yield(node) : result << node.data
 
     result
+  end
+
+  def height_recursive(node)
+    return -1 if node.nil?
+
+    left_height = height_recursive(node.left)
+    right_height = height_recursive(node.right)
+
+    [left_height, right_height].max + 1
+  end
+
+  def contains?(node)
+    !find(node.data).nil?
   end
 end
