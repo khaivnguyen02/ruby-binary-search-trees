@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'node'
 
 class Tree
@@ -24,6 +26,10 @@ class Tree
     @root = insert_recursive(@root, value)
   end
 
+  def find(value)
+    find_recursive(@root, value)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -42,5 +48,17 @@ class Tree
     end
 
     node
+  end
+
+  def find_recursive(node, value)
+    return nil if node.nil?
+
+    return node if node.data == value
+
+    if value < node.data
+      find_recursive(node.left, value)
+    else
+      find_recursive(node.right, value)
+    end
   end
 end
