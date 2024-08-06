@@ -67,6 +67,9 @@ class Tree
   end
 
   def depth(node)
+    return nil if node.nil? || !contains?(node)
+
+    depth_recursive(@root, node, 0)
   end
 
   def balanced?
@@ -144,6 +147,16 @@ class Tree
     right_height = height_recursive(node.right)
 
     [left_height, right_height].max + 1
+  end
+
+  def depth_recursive(current_node, target_node, current_depth)
+    return current_depth if current_node == target_node
+
+    if target_node.data < current_node.data
+      depth_recursive(current_node.left, target_node, current_depth + 1)
+    elsif target_node.data > current_node.data
+      depth_recursive(current_node.right, target_node, current_depth + 1)
+    end
   end
 
   def contains?(node)
