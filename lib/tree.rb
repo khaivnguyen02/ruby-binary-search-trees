@@ -76,6 +76,7 @@ class Tree
   end
 
   def rebalance
+    @root = build_tree(inorder)
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
