@@ -60,8 +60,7 @@ class Tree
   end
 
   def height(node)
-    return nil if node.nil?
-    return -1 unless contains?(node)
+    return nil if node.nil? || !contains?(node)
 
     height_recursive(node)
   end
